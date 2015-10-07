@@ -127,6 +127,111 @@
       </div> <!-- row -->
     </div> <!-- container -->
   </section> <!-- intro -->
+
+
+  <section id="forms" style="display:none">
+    <div class="container-fluid">
+      <div class="row-fluid row-centered">
+        <div class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
+          <h1>UI Prototype - Forms</h1>
+          <p>Forms that enable the adding/editing of data is one of the two basic functions any website has (the other is <a class="render" data-section="views">views</a>).</p>
+          <p>You can start off with any of the standard <a href="http://getbootstrap.com/css/#forms">Bootstrap forms</a> that provide various layout options.  However this UI protoype uses a number of conventions for presentation which is totally configuration for your own application. Here is our demo <a class="render" data-section="personal">Personal Details</a> form. This form provides no working functionality, we discuss that next.</p>
+          <pre>
+&lt;form class="form-horizontal" method="POST">
+  &lt;fieldset>
+    &lt;legend>Personal Details&lt;/legend>
+    &lt;div class="msg alert" style="display:none">&lt;/div>
+    &lt;div class="form-group">
+      &lt;label for="first_name">First Name&lt;/label>
+      &lt;input name="first_name" class="form-control" />
+    &lt;/div> &lt;!-- form-group -->
+    &lt;div class="form-group">
+      &lt;label for="last_name">Last Name&lt;/label>
+      &lt;input name="last_name" class="form-control" />
+    &lt;/div> &lt;!-- form-group -->
+    &lt;div class="form-group text-center">
+      &lt;button class="btn btn-success save">Save&lt;/button>
+      &lt;button class="btn btn-default cancel">Cancel&lt;/button>
+    &lt;/div> &lt;!-- form-group -->
+  &lt;/fieldset>
+&lt;/form> </pre>
+
+          <p> In addition to the normal <code>form</code>, <code>input</code> and <code>button</code> sections for a general HTML form we add two characteristics.   </p>
+          <ul>
+            <li>A <code>fieldset</code> and corresponding <code>legend</code> to identify the form. </li>
+            <li>We add an Bootstrap <a href="http://getbootstrap.com/components/#alerts">alert</a> <code>div</code> tag with a specific class of <code>msg</code>. When defined the javascript that is used to validate, save and display information will post messages to this section.</li>
+          </ul>
+          </p>
+          <p>If you want to jazz up your form, as with the actual <a class="render" data-section="login">login form</a> in this demo, you can add a <a href="http://getbootstrap.com/components/#wells">well</a> around the <code>fieldset</code>.</p>
+          <p>Basically all web applications have a login page, however login pages generally have some special handling, such as a password field, 
+          <p>
+            <button class="btn btn-primary render" data-section="layout"><span class="glyphicon glyphicon-backward" aria-hidden="true"></span> Layout</button>
+            <button class="btn btn-success render" data-section="validation">Validation <span class="glyphicon glyphicon-forward" aria-hidden="true"></span></button>
+          </p>
+        </div> <!-- col -->
+      </div> <!-- row -->
+    </div> <!-- container -->
+  </section> <!-- forms -->
+
+
+  <section id="personal" style="display:none">
+    <div class="container-fluid">
+      <div class="row-fluid row-centered">
+        <div class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3 col-centered">
+          <form class="form-horizontal" method="POST">
+            <fieldset>
+              <legend>Personal Details</legend>
+              <div class="msg alert" style="display:none"></div>
+              <div class="form-group">
+                <label for="first_name">First Name</label>
+                <input name="first_name" class="form-control" />
+              </div> <!-- form-group -->
+              <div class="form-group">
+                <label for="last_name">Last Name</label>
+                <input name="last_name" class="form-control" />
+              </div> <!-- form-group -->
+              <div class="form-group text-center">
+                <button class="btn btn-success save">Save</button>
+                <button class="btn btn-default cancel">Cancel</button>
+              </div> <!-- form-group -->
+            </fieldset>
+          </form>
+        </div> <!-- col -->
+      </div> <!-- row -->
+    </div> <!-- container -->
+  </section> <!-- login -->
+
+
+  <section id="login" style="display:none">
+    <div class="container-fluid">
+      <div class="row-fluid row-centered">
+        <div class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3 col-centered">
+          <form class="form-horizontal" method="POST">
+            <div class="well login">
+              <fieldset>
+                <legend>Login</legend>
+                <div class="msg alert" style="display:none"></div>
+                <div class="form-group">
+                  <label for="email">Email</label>
+                  <input name="email" class="form-control" />
+                </div> <!-- form-group -->
+                <div class="form-group">
+                  <label for="passwd">Password</label>
+                  <input name="passwd" type="password" class="form-control" />
+                </div> <!-- form-group -->
+                <div class="form-group text-center">
+                  <button class="btn btn-success save">Login</button>
+                  <button class="btn btn-default cancel">Cancel</button>
+                </div> <!-- form-group -->
+              </fieldset>
+            </div> <!-- well -->
+          </form>
+        </div> <!-- col -->
+      </div> <!-- row -->
+    </div> <!-- container -->
+  </section> <!-- login -->
+
+
 </body>
 
 <script type="text/javascript" src="js/jquery.min.js"></script>
@@ -139,6 +244,12 @@
 -->
 <script type="text/javascript" src="default.js"></script>
 <script type="text/javascript">
+
+function post_personal() {
+  show_section("forms");
+  return true;
+}
+
 $(document).ready(function() {
   default_ready();
 }); // document.ready
