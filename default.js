@@ -265,6 +265,11 @@ function default_ready() {
   render_hash(home());
 }
 
+function focus_first(name) {
+  id = add_hash(name);
+  $('form', id).find(':input').filter(':visible:first').focus();
+}
+
 /*
  *  Generic button/link functions
  *
@@ -283,6 +288,8 @@ $('.render').click(function(event) {
   page = $(this).attr('data-section');
   if (page) {
     logger.info(callee, "Identified attribute [data-section] = '" + page + "' to render");
+    if (page == HOME)
+      page = home();
     fill_and_render(page);
     return post_function("render", page , $(this));
   }
