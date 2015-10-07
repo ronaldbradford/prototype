@@ -12,17 +12,18 @@
 
   <title>UI Prototype</title>
 
-  <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" rel="stylesheet" type="text/css">
-  <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-  <link href="styles.css"  rel="stylesheet" type="text/css">
-  <!-- NON CDN
-  <link href="/css/bootstrap.min.css" rel="stylesheet">
-  <link href="/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css">
+  <!-- CDN Version
+  <link rel="stylesheet" type="text/css" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
   -->
   <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
   <![endif]-->
+  <link rel="stylesheet" type="text/css" href="styles.css">
+
 </head>
 
 <body>
@@ -53,6 +54,7 @@
         <div class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
           <h1>UI Prototype</h1>
           <p>This template enables you to quickly generate a single page HTML prototype application that is actually a functioning application and the basis of producing an end product.</p>
+          <p>UI Prototype uses HTML 5, <a href="http://getbootstrap.com/">Bootstrap 3</a> for CSS styles, <a href="http://jquery.com/">JQuery 2</a> for Javascript.</p>
           <p><button class="btn btn-success render" data-section="intro">Intro</button></p>
         </div> <!-- col -->
       </div> <!-- row -->
@@ -110,9 +112,14 @@
   </section> <!-- intro -->
 </body>
 
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript" src="js/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/jquery.validate.min.js"></script>
+<!-- CDN Version
 <script type="text/javascript" src="//code.jquery.com/jquery-2.1.3.min.js"></script>
 <script type="text/javascript" src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.validation/1.13.1/jquery.validate.min.js"></script>
+-->
 <script type="text/javascript" src="default.js"></script>
 
 <script type="text/javascript">
