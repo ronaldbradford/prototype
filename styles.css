@@ -1,5 +1,10 @@
-section { margin-top: 70px; margin-bottom: 40px; }
+section { margin-top: 70px; margin-bottom: 40px; }   /* Avoid the nav bar */
 footer  { margin-top: 60px; border-top: 2px solid #EFEFEF; }
 button  { margin: 0px 10px; }
-a:hover { cursor: pointer; }
 
+
+a:hover { cursor: pointer; } /* Help the navbar without needing href="#" attributes */
+
+/* for jQuery.validation plugin */
+label.error { padding-left: 16px; padding-bottom: 2px; font-weight: bold; color: #EA5200; }
+input.error { border-color: #EA5200; background-color: #FFE3E3; }

@@ -51,7 +51,8 @@
               <li><a class="render" data-section="validation">Validation</a></li>
               <li><a class="render" data-section="views">Views</a></li>
               <li role="separator" class="divider"></li>
-              <li><a href="#">One more separated link</a></li>
+              <li><a class="render" data-section="personal">Personal Details</a></li>
+              <li><a class="render" data-section="better_personal">Better Personal</a></li>
             </ul>
           </li>
         </ul>
@@ -185,6 +186,41 @@
     </div> <!-- container -->
   </section> <!-- forms -->
 
+  <section id="validation" style="display:none">
+    <div class="container-fluid">
+      <div class="row-fluid row-centered">
+        <div class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
+          <h1>UI Prototype - Validation</h1>
+          <p>Forms generally require validation. The <a href="http://jqueryvalidation.org/">jQuery Validation plugin</a> does all the work, we only need to define the rules.  Using our improved <a class="render" data-section="better_personal">personal details form</a> we add some validation. Trying saving now! </p>
+          <pre>
+$(document).ready(function() {
+  ...
+
+  $("form", "#better_personal").validate({
+    rules: {
+      first_name:  { required: true, minlength: 2, maxlength: 20, },
+      last_name:   { required: true, minlength: 2, maxlength: 20, },
+      email:       { required: true, maxlength: 60, email: true, }
+    },
+    messages: {
+      first_name: { required: "You need a first name",
+                    minlength: jQuery.validator.format("Enter at least {0} characters") },
+      last_name:  { required: "You need a last name",
+                    minlength: jQuery.validator.format("Enter at least {0} characters") },
+      email:      { required: "Please enter a valid email address" }
+    }
+  }); // form.validate
+
+}); // document.ready </pre>
+
+          <p>
+            <button class="btn btn-primary render" data-section="forms"><span class="glyphicon glyphicon-backward" aria-hidden="true"></span> Forms</button>
+            <button class="btn btn-success render" data-section="views">Views <span class="glyphicon glyphicon-forward" aria-hidden="true"></span></button>
+          </p>
+        </div> <!-- col -->
+      </div> <!-- row -->
+    </div> <!-- container -->
+  </section> <!-- _blank -->
 
   <section id="personal" style="display:none">
     <div class="container-fluid">
@@ -201,6 +237,38 @@
               <div class="form-group">
                 <label for="last_name">Last Name</label>
                 <input name="last_name" class="form-control" />
+              </div> <!-- form-group -->
+              <div class="form-group text-center">
+                <button class="btn btn-success save">Save</button>
+                <button class="btn btn-default cancel">Cancel</button>
+              </div> <!-- form-group -->
+            </fieldset>
+          </form>
+        </div> <!-- col -->
+      </div> <!-- row -->
+    </div> <!-- container -->
+  </section> <!-- login -->
+
+
+  <section id="better_personal" style="display:none">
+    <div class="container-fluid">
+      <div class="row-fluid row-centered">
+        <div class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3 col-centered">
+          <form class="form-horizontal" method="POST">
+            <fieldset>
+              <legend>Better Personal Details <small>with validation</small></legend>
+              <div class="msg alert" style="display:none"></div>
+              <div class="form-group">
+                <label for="first_name">First Name</label>
+                <input name="first_name" class="form-control" maxlength="20" />
+              </div> <!-- form-group -->
+              <div class="form-group">
+                <label for="last_name">Last Name</label>
+                <input name="last_name" class="form-control" maxlength="20" />
+              </div> <!-- form-group -->
+              <div class="form-group">
+                <label for="email">Email</label>
+                <input name="email" class="form-control" />
               </div> <!-- form-group -->
               <div class="form-group text-center">
                 <button class="btn btn-success save">Save</button>
@@ -262,8 +330,29 @@ function post_personal() {
   return true;
 }
 
+function post_better_personal() {
+  show_section("validation");
+  return true;
+}
+
 $(document).ready(function() {
   default_ready();
+
+  $("form", "#better_personal").validate({
+    rules: {
+      first_name:  { required: true, minlength: 2, maxlength: 20 },
+      last_name:   { required: true, minlength: 2, maxlength: 20 },
+      email:       { required: true, maxlength: 60, email: true, }
+    },
+    messages: {
+      first_name: { required: "You need a first name",
+                    minlength: jQuery.validator.format("Enter at least {0} characters") },
+      last_name:  { required: "You need a last name",
+                    minlength: jQuery.validator.format("Enter at least {0} characters") },
+      email:      { required: "Please enter a valid email address" }
+    }
+  }); // form.validate
+
 }); // document.ready
 </script>
 
