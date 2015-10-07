@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Type" value="application/xhtml+xml;charset=utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A UI Prototype using Bootstrap and JQuery">
+  <meta name="author" content="Ronald Bradford">
+  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+
+  <title>UI Prototype</title>
+
+  <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+  <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+  <link href="styles.css"  rel="stylesheet" type="text/css">
+  <!-- NON CDN
+  <link href="/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+  -->
+  <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+  <![endif]-->
+</head>
+
+<body>
+
+
+  <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#nav">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand render" data-section="home">Home</a>
+      </div> <!-- navbar-header -->
+      <div class="collapse navbar-collapse" id="nav">
+        <ul class="nav navbar-nav navbar-right">
+        </ul>
+      </div> <!-- .navbar-collapse -->
+    </div> <!-- .container -->
+  </nav>
+
+
+  <section id="home" style="display:none">
+    <div class="container-fluid">
+      <div class="row-fluid row-centered">
+        <div class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
+          <h1>UI Prototype</h1>
+          <p>This template enables you to quickly generate a single page HTML prototype application that is actually a functioning application and the basis of producing an end product.</p>
+          <p><button class="btn btn-success render" data-section="intro">Intro</button></p>
+        </div> <!-- col -->
+      </div> <!-- row -->
+    </div> <!-- container -->
+  </section> <!-- home -->
+
+
+  <section id="intro" style="display:none">
+    <div class="container-fluid">
+      <div class="row-fluid row-centered">
+        <div class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
+          <h1>UI Prototype - Intro</h1>
+
+          <p>The basis of this HTML template are individual pages that are represented in <code>&lt;section></code> tags. Each section has an <code>id</code> and is defined as hidden.</p>
+          <pre>
+&lt;section id="intro" style="display:none">
+&lt;/section> &lt;!-- intro --> </pre>
+          <p>To <b>render</b> any given page defined as a section you add to a standard bootstrap link or button the <b>"render"</b> class and you define a <code>data-section</code> element defining the section you wish to render. On the home page you clicked a button to get to this intro section.
+          <pre>
+&lt;button class="btn btn-success <u>render</u>" <u>data-section="intro"</u>>Intro&lt;button> </pre>
+          <p>Behind the scenes there is ajQuery <code>click()</code> function for the defined <code>.render</code> class. This takes care of the appropriate showing of the section. It does a lot more also, we discuss that later.</p>
+          <p><button class="btn btn-success render" data-section="layout">Layout</button></p>
+        </div> <!-- col -->
+      </div> <!-- row -->
+    </div> <!-- container -->
+  </section> <!-- intro -->
+
+
+  <section id="layout" style="display:none">
+    <div class="container-fluid">
+      <div class="row-fluid row-centered">
+        <div class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
+          <h1>UI Prototype - Layout</h1>
+
+          <p><a href="http://getbootstrap.com/">Bootstrap</a> enables a responsive CSS design of your webpage.  You can customize this for your application as you wish.  The following is the default that is used here and works to provide a view for three responsive layouts (cell phone, tablet, computer).  </p>
+          <pre>
+&lt;section id="layout" style="display:none">
+  &lt;div class="container-fluid">
+    &lt;div class="row-fluid row-centered">
+      &lt;div class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
+        &lt;h1>UI Prototype - Layout&lt;/h1>
+        &lt;p>...&lt;/p>
+      &lt;div> &lt;!-- col -->
+    &lt;div> &lt;!-- row -->
+  &lt;div> &lt;!-- container -->
+&lt;/section> &lt!-- layout --> </pre>
+          <p>You can resize this window down to see the responsive design. Code blocks are not the usual application so this becomes less effective in a smaller cell phone size resolution.</p>
+          <p>
+            <button class="btn btn-primary render" data-section="intro">Intro</button>
+            <button class="btn btn-success render" data-section="forms">Forms</button>
+          </p>
+        </div> <!-- col -->
+      </div> <!-- row -->
+    </div> <!-- container -->
+  </section> <!-- intro -->
+</body>
+
+<script type="text/javascript" src="//code.jquery.com/jquery-2.1.3.min.js"></script>
+<script type="text/javascript" src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/jquery.validation/1.13.1/jquery.validate.min.js"></script>
+<script type="text/javascript" src="default.js"></script>
+
+<script type="text/javascript">
+// not logged in, and logged in home pages
+var default_pages = ["home", "home"];
+var loggedin = false;
+
+$(document).ready(function() {
+  var callee = "document.ready()";
+  logger.level(logger.DEBUG);
+  render_hash(home());
+}); // document.ready
+</script>
+</body>
+</html>
