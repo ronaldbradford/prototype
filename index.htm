@@ -52,6 +52,8 @@
               <li><a class="render" data-section="views">Views</a></li>
               <li><a class="render" data-section="persistence">Persistence</a></li>
               <li><a class="render" data-section="hooks">Hooks</a></li>
+              <li><a class="render" data-section="messages">Messages</a></li>
+              <li><a class="render" data-section="data">Loading data</a></li>
               <li role="separator" class="divider"></li>
               <li><a class="render" data-section="personal">Personal Details</a></li>
               <li><a class="render" data-section="better_personal">Better Personal</a></li>
@@ -249,6 +251,7 @@ $(document).ready(function() {
           <p>This UI prototype saves forms information automatically, and it will render this as well. No server side code needed!</p>
           <p>If you did not try and save data on the <a class="render" data-section="better_personal">personal details form</a> try it now.  Navigate around and go back to the form. Close down the browser and go back to the form. </p>
           <p>The wonders of new browsers is that they provide local storage.  For developing a prototype this works fine. For any system where users view data that may not be their own, you need a centralized data store such as <a href="http://mysql.com">MySQL</a>. </p>
+          <p>This works by using the default hooks that are defined and associate with classes.  You have already seen one hook, the <code>render</code> class which shows a new page defined as a <code>section</code>. As part of showing the section, it also calls the default hook to load data on a <code>form</code> if one is found. The second hook which you have used, is the <code>save</code> class which is defined on a button when you save data.  In the next section we talk about customizing these hooks.</p>
           <p>
             <button class="btn btn-primary render" data-section="views"><span class="glyphicon glyphicon-backward" aria-hidden="true"></span> Views</button>
             <button class="btn btn-success render" data-section="hooks">Hooks <span class="glyphicon glyphicon-forward" aria-hidden="true"></span></button>
@@ -264,9 +267,64 @@ $(document).ready(function() {
         <div class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
           <h1>UI Prototype - Hooks</h1>
           <p>TBD</p>
+          <ul> 
+            <li><b>render_[section]</b> - This is the code called after the section has been rendered. The default is always called first.  This demo actually uses this hook to place focus on the first name of the better personal form.</li>
+            <li><b>save_[section]</b> - This is the code that is called when you use <code>save</code> on a given section. This replaces the save_default functionality. This is where you put your custom code to save to a data store.</li>
+            <li><b>post_[section]</b> - This is the code that is called after a save section, regardless of if you use the default or a custom section. This demo also uses this hook to place you back on the right page after filling in personal or better personal details</li>
+          </ul>
+          <p>Here are the Javascript hooks already in use.
+          <pre>
+function render_better_personal(page) {
+  id = add_hash(page);
+  $("form input[name=first_name]",id).focus();
+}
+
+function post_personal() {
+  show_section("forms");
+  return true;
+}
+</pre>
+
           <p>
             <button class="btn btn-primary render" data-section="persistence"><span class="glyphicon glyphicon-backward" aria-hidden="true"></span> Persistence</button>
-            <button class="btn btn-success render" data-section="home">TBD! <span class="glyphicon glyphicon-forward" aria-hidden="true"></span></button>
+            <button class="btn btn-success render" data-section="messages">Messages <span class="glyphicon glyphicon-forward" aria-hidden="true"></span></button>
+          </p>
+        </div> <!-- col -->
+      </div> <!-- row -->
+    </div> <!-- container -->
+  </section> <!-- _blank -->
+
+
+  <section id="messages" style="display:none">
+    <div class="container-fluid">
+      <div class="row-fluid row-centered">
+        <div class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
+          <h1>UI Prototype - Messages</h1>
+          <p>TBD</p>
+          <p>When defined on a section (or within a form), ... use standard Boostrap alerts which look like.</p>
+          <div class="alert alert-danger">An error message</div>
+          <div class="alert alert-warning">A warning message</div>
+          <div class="alert alert-success">A general message</div>
+          <p>
+            <button class="btn btn-primary render" data-section="hooks"><span class="glyphicon glyphicon-backward" aria-hidden="true"></span> Hooks</button>
+            <button class="btn btn-success render" data-section="data">External data <span class="glyphicon glyphicon-forward" aria-hidden="true"></span></button>
+          </p>
+        </div> <!-- col -->
+      </div> <!-- row -->
+    </div> <!-- container -->
+  </section> <!-- _blank -->
+
+  <section id="_template" style="display:none">
+    <div class="container-fluid">
+      <div class="row-fluid row-centered">
+        <div class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
+          <h1>UI Prototype - Loading Data</h1>
+          <p>TBD</p>
+          <p>If you have external JSON data, either in a local file or from a url, this can be easily loaded and rendered.
+          </p>
+          <p>
+            <button class="btn btn-primary render" data-section="messages"><span class="glyphicon glyphicon-backward" aria-hidden="true"></span> Messages</button>
+            <button class="btn btn-success render" data-section="home">TBD <span class="glyphicon glyphicon-forward" aria-hidden="true"></span></button>
           </p>
         </div> <!-- col -->
       </div> <!-- row -->
@@ -375,6 +433,11 @@ $(document).ready(function() {
 -->
 <script type="text/javascript" src="default.js"></script>
 <script type="text/javascript">
+
+function render_better_personal(page) {
+  id = add_hash(page);
+  $("form input[name=first_name]",id).focus();
+}
 
 function post_personal() {
   show_section("forms");
