@@ -54,6 +54,7 @@
               <li><a class="render" data-section="hooks">Hooks</a></li>
               <li><a class="render" data-section="messages">Messages</a></li>
               <li><a class="render" data-section="data">Loading data</a></li>
+              <li><a class="render" data-section="demo">What's next</a></li>
               <li role="separator" class="divider"></li>
               <li><a class="render" data-section="personal">Personal Details</a></li>
               <li><a class="render" data-section="better_personal">Better Personal</a></li>
@@ -75,7 +76,7 @@
         </div> <!-- col -->
       </div> <!-- row -->
     </div> <!-- container -->
-  </section> <!-- _blank -->
+  </section> <!-- _template -->
 
 
   <section id="home" style="display:none">
@@ -224,7 +225,7 @@ $(document).ready(function() {
         </div> <!-- col -->
       </div> <!-- row -->
     </div> <!-- container -->
-  </section> <!-- _blank -->
+  </section> <!-- validation -->
 
 
   <section id="views" style="display:none">
@@ -240,7 +241,7 @@ $(document).ready(function() {
         </div> <!-- col -->
       </div> <!-- row -->
     </div> <!-- container -->
-  </section> <!-- _blank -->
+  </section> <!-- views -->
 
 
   <section id="persistence" style="display:none">
@@ -259,7 +260,7 @@ $(document).ready(function() {
         </div> <!-- col -->
       </div> <!-- row -->
     </div> <!-- container -->
-  </section> <!-- _blank -->
+  </section> <!-- persistence -->
 
   <section id="hooks" style="display:none">
     <div class="container-fluid">
@@ -292,7 +293,7 @@ function post_personal() {
         </div> <!-- col -->
       </div> <!-- row -->
     </div> <!-- container -->
-  </section> <!-- _blank -->
+  </section> <!-- hooks -->
 
 
   <section id="messages" style="display:none">
@@ -312,9 +313,9 @@ function post_personal() {
         </div> <!-- col -->
       </div> <!-- row -->
     </div> <!-- container -->
-  </section> <!-- _blank -->
+  </section> <!-- messages -->
 
-  <section id="_template" style="display:none">
+  <section id="data" style="display:none">
     <div class="container-fluid">
       <div class="row-fluid row-centered">
         <div class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
@@ -329,7 +330,22 @@ function post_personal() {
         </div> <!-- col -->
       </div> <!-- row -->
     </div> <!-- container -->
-  </section> <!-- _blank -->
+  </section> <!-- data -->
+
+  <section id="demo" style="display:none">
+    <div class="container-fluid">
+      <div class="row-fluid row-centered">
+        <div class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
+          <h1>UI Prototype - What's Next</h1>
+          <p>Enough with describing what you can do, let's demonstrate it with our demo application.</p>
+          <a class="btn btn-default btn-large" href="demo/">Demo Application</a>
+     
+        </div> <!-- col -->
+      </div> <!-- row -->
+    </div> <!-- container -->
+  </section> <!-- demo -->
+
+
 
   <section id="personal" style="display:none">
     <div class="container-fluid">
@@ -448,6 +464,18 @@ function post_better_personal() {
   show_section("validation");
   return true;
 }
+
+var states = [];
+
+function load_states(json) {
+  states = json;
+  return false;
+}
+
+function render_data() {
+  get('states.json', 'states', load_states);
+}
+
 
 $(document).ready(function() {
   default_ready();
