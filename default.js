@@ -1,9 +1,27 @@
 var HASH = '#';
+var HOME = 'home';
 
+var loggedin = false;
+
+/**
+ * Returns the section that is the defacto home page
+ *
+ * @return {string} section to display
+ */
 function home() {
+  if (typeof default_pages == 'undefined')
+    return HOME;
+
   return (loggedin ? default_pages[1] : default_pages[0]);
 }
 
+/**
+ * Returns a string with a preceeding # to represent a
+   JQuery Id identifier
+ *
+ * @param  {name} string to verify starts with #
+ * @return {string} section to display
+ */
 function add_hash(name) {
   if (name && name.substring(0,1) != HASH) 
     return HASH + name;
@@ -11,6 +29,13 @@ function add_hash(name) {
   return name;
 }
  
+/**
+ * Returns a string without a preceeding #
+   JQuery Id identifier
+ *
+ * @param  {name} string to verify does not start with #
+ * @return {string} value
+ */
 function strip_hash(name) {
   if (name && name.substring(0,1) == HASH) 
     return name.substring(1);
@@ -18,27 +43,28 @@ function strip_hash(name) {
   return name;
 }
 
-function fill_and_render(name, obj) {
+function fill_and_render(name, data) {
   var callee = arguments.callee.name + "()";
-  logger.debug(callee, "Passed arguments (" + name + ")");
-  name = add_hash(name);
-  id = strip_hash(name);
+  logger.debug(callee, "Passed arguments (" + name +  "," + data + ")");
 
-  if ($(name).length == 0) {
-    logger.warn(callee, "There is no section for " + id);
+  name = strip_hash(name);
+  id = add_hash(name);
+
+  if ($(id).length == 0) {
+    logger.warn(callee, "There is no section for '" + id + "'");
     return;
   }
 
-  if (!obj) {
-    obj = local_get(id);
-    logger.info(callee, "Getting local storage object - " + JSON.stringify(obj));
+  if (!data) {
+    data = local_get(name);
+    logger.info(callee, "Retrieved local storage data '" + name + "' = " + JSON.stringify(data));
   }
 
-  form = $(name).find('form');
-  if (form && obj && Object.keys(obj).length > 0) {
-    logger.info(callee, "Attempting to fill form on page '" + name + "'");
-    form.values(true, obj);
-    data[id] = obj;
+  form = $(id).find('form');
+  if (form && data && Object.keys(data).length > 0) {
+    logger.info(callee, "Attempting to fill form on page '" + id + "'");
+    form.values(true, data);
+    data[name] = data;
   }
 
   show_section(name);
@@ -46,18 +72,29 @@ function fill_and_render(name, obj) {
   return form;
 }
 
+/**
+ * Show the given section (by name) if not already visible
+ *
+ * @param  {id} Section to show
+ */
 function show_section(id) {
   var callee = arguments.callee.name + "()";
   logger.debug(callee, "Passed arguments(" + (id ? id : "") + ")");
-  if (!id) 
+  if (!id)   // Check for passed value
     return;
 
-  $('section').hide();
-  id = add_hash(id);
-  if ($('.msg', id).length > 0)
-    $('.msg',id).empty().removeClass('alert-danger').removeClass('alert-warning').removeClass('alert-success').hide();
+  id = add_hash(id);  // Convert id to JQuery #id
 
-  $(id).show();
+  if ($(id).is(":visible")) {   // Check if not already showing
+     logger.warn(callee, "'" + id +"' is already visible")
+     return;
+  } 
+
+  $('section').hide();    // Hide all sections
+  if ($('.msg', id).length > 0)   // Clear global message div if exists
+    $('.msg',id).empty().removeClass('alert-danger alert-warning alert-success').hide();
+  $(id).show();  // Show given section
+
   logger.warn(callee, "---------------------------------------------------------------------- " + id + " ---");
 
   return;
@@ -104,6 +141,19 @@ function local_save(el, id) {
   return;
 }
 
+function post_function(prefix, name, obj) {
+  var callee = arguments.callee.name + "()";
+  logger.debug(callee, "Passed arguments (" + prefix + ", " + name + ", " + obj + ")");
+
+  post_function_name = prefix +"_" + name;
+  if (window[post_function_name]) {
+    logger.info(callee, "Found post function '" + post_function_name + "' to execute");
+    return window[post_function_name](name, obj);
+  }
+
+  return;
+}
+
 function save_default(form, id) {
   var callee = arguments.callee.name + "()";
   logger.debug(callee, "Passed Arguments (form element)");
@@ -136,14 +186,14 @@ function ajax_get(req, el) {
         if (json.res.mess && json.res.mess.length > 0) {
           message = json.res.mess[0];
           $('div.msg', el).addClass('alert-danger').text(message.message).show();
-          post_function=req.error;
-          if (post_function && window[post_function])
-            window[post_function](el);
+          post_function_name=req.error;
+          if (post_function_name && window[post_function_name])
+            window[post_function_name](el);
         }
       } else {
-        post_function=req.post;
-        if (post_function && window[post_function])
-          window[post_function](el, json);
+        post_function_name=req.post;
+        if (post_function_name && window[post_function_name])
+          window[post_function_name](el, json);
       } // 200
 
     }, // success
@@ -152,9 +202,9 @@ function ajax_get(req, el) {
       if (el)
         $('div.msg', el).addClass('alert-danger').text('An error occurred obtaining data').show();
 
-      post_function=req.error;
-      if (post_function && window[post_function])
-        window[post_function](el);
+      post_function_name=req.error;
+      if (post_function_name && window[post_function_name])
+        window[post_function_name](el);
 
     } // error
   }); // .ajax
@@ -180,24 +230,26 @@ function render_url(url, default_page) {
     logger.info(callee, "Found # page from URL of '" + page + "'");
     fill_and_render(page);
     page = strip_hash(page);
-    post_function="render_" + page;
-    logger.info(callee, "Checking for function " + post_function);
-    if (window[post_function])
-      window[post_function](page, $(this));
+    post_function("render", page, $(this));
+
     return page;
   }
 
   if (default_page) {
     logger.info(callee, "No Hash in URL, rendering default section '" + default_page + "'");
     show_section(default_page);
-    post_function="render_" + default_page;
-    logger.info(callee, "Checking for function " + post_function);
-    if (window[post_function])
-      window[post_function](default_page, $(this));
+    post_function("render", page, $(this));
     return default_page;
   }
 
   return;
+}
+
+
+function default_ready() {
+  var callee = "document.ready()";
+  logger.level(logger.DEBUG);
+  render_hash(home());
 }
 
 /*
@@ -210,15 +262,16 @@ function render_url(url, default_page) {
  */
 
 $('.render').click(function(event) {
-  event.preventDefault();
   var callee = ".render.click()";
+  logger.debug(callee, "triggered");
+
+  event.preventDefault();
+
   page = $(this).attr('data-section');
   if (page) {
-    logger.info(callee, "Identified button[data-section] = '" + page + "' to render section");
+    logger.info(callee, "Identified attribute [data-section] = '" + page + "' to render");
     fill_and_render(page);
-    post_function="render_" + page;
-    if (window[post_function])
-      window[post_function](page, $(this));
+    return post_function("render", page , $(this));
   }
   return false;
 });
@@ -236,9 +289,9 @@ $('.save').click(function(event) {
   var form = $('form', id);
   if (form.valid()) {
     logger.info(callee, 'Validated Form');
-    post_function="save_" + page;
-    if (window[post_function])
-      window[post_function](form, id, $(this));
+    post_function_name="save_" + page;
+    if (window[post_function_name])
+      window[post_function_name](form, id, $(this));
     else
       save_default(form, id);
   } else {
@@ -301,6 +354,15 @@ $.fn.values = function(all_data, data) {
   }
 }; // .fn.values
 
+/**
+ *  This anonymous function defines an improved message logging
+ *  function, that provides information with a given logging level
+ *  e.g. (ERROR,WARN,INFO), a specific date/time, the function and 
+ *  message.
+ *
+ *  By default logging is sent to the javascript console, but can
+ *  (in future) also be logged to a remote service.
+ */
 
 (function (window) {
 
