@@ -2,6 +2,7 @@ var HASH = '#';
 var HOME = 'home';
 
 var loggedin = false;
+var data = [];
 
 /**
  * Returns the section that is the defacto home page
@@ -141,7 +142,7 @@ function local_save(el, id) {
   return;
 }
 
-function post_function(prefix, name, obj) {
+function post_function(prefix, name, obj, fallback_function_name) {
   var callee = arguments.callee.name + "()";
   logger.debug(callee, "Passed arguments (" + prefix + ", " + name + ", " + obj + ")");
 
@@ -149,18 +150,30 @@ function post_function(prefix, name, obj) {
   if (window[post_function_name]) {
     logger.info(callee, "Found post function '" + post_function_name + "' to execute");
     return window[post_function_name](name, obj);
+  } else {
+    if (fallback_function_name != undefined) {
+      logger.info(callee, "Found fallback function '" + fallback_function_name + "' to execute");
+      return window[fallback_function_name](name, obj);
+    }
   }
 
-  return;
+  return false;
 }
 
 function save_default(form, id) {
   var callee = arguments.callee.name + "()";
   logger.debug(callee, "Passed Arguments (form element)");
   local_save($(form), id);
-  show_section(home());
+  name = strip_hash(id);
+  post_function("post", name, form, "post_default");
 }
 
+
+function post_default(name, obj) {
+  var callee = arguments.callee.name + "()";
+  logger.debug(callee, "Passed Arguments (" + name + ", " + obj + ")");
+  show_section(home());
+}
 
 function ajax_get(req, el) {
   var callee = arguments.callee.name + "()";
