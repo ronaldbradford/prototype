@@ -55,7 +55,7 @@
           <h1>UI Prototype</h1>
           <p>This template enables you to quickly generate a single page HTML prototype application that is actually a functioning application and the basis of producing an end product.</p>
           <p>UI Prototype uses HTML 5, <a href="http://getbootstrap.com/">Bootstrap 3</a> for CSS styles, <a href="http://jquery.com/">JQuery 2</a> for Javascript.</p>
-          <p><button class="btn btn-success render" data-section="intro">Intro</button></p>
+          <p><button class="btn btn-success render" data-section="intro">Intro <span class="glyphicon glyphicon-forward" aria-hidden="true"></span></button></p>
         </div> <!-- col -->
       </div> <!-- row -->
     </div> <!-- container -->
@@ -76,7 +76,10 @@
           <pre>
 &lt;button class="btn btn-success <u>render</u>" <u>data-section="intro"</u>>Intro&lt;button> </pre>
           <p>Behind the scenes there is ajQuery <code>click()</code> function for the defined <code>.render</code> class. This takes care of the appropriate showing of the section. It does a lot more also, we discuss that later.</p>
-          <p><button class="btn btn-success render" data-section="layout">Layout</button></p>
+          <p>
+            <button class="btn btn-primary render" data-section="home"><span class="glyphicon glyphicon-backward" aria-hidden="true"></span> Home</button>
+            <button class="btn btn-success render" data-section="layout">Layout <span class="glyphicon glyphicon-forward" aria-hidden="true"></span></button>
+          </p>
         </div> <!-- col -->
       </div> <!-- row -->
     </div> <!-- container -->
@@ -103,8 +106,8 @@
 &lt;/section> &lt!-- layout --> </pre>
           <p>You can resize this window down to see the responsive design. Code blocks are not the usual application so this becomes less effective in a smaller cell phone size resolution.</p>
           <p>
-            <button class="btn btn-primary render" data-section="intro">Intro</button>
-            <button class="btn btn-success render" data-section="forms">Forms</button>
+            <button class="btn btn-primary render" data-section="intro"><span class="glyphicon glyphicon-backward" aria-hidden="true"></span> Intro</button>
+            <button class="btn btn-success render" data-section="forms">Forms <span class="glyphicon glyphicon-forward" aria-hidden="true"></span></button>
           </p>
         </div> <!-- col -->
       </div> <!-- row -->
@@ -121,17 +124,11 @@
 <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.validation/1.13.1/jquery.validate.min.js"></script>
 -->
 <script type="text/javascript" src="default.js"></script>
-
 <script type="text/javascript">
-// not logged in, and logged in home pages
-var default_pages = ["home", "home"];
-var loggedin = false;
-
 $(document).ready(function() {
-  var callee = "document.ready()";
-  logger.level(logger.DEBUG);
-  render_hash(home());
+  default_ready();
 }); // document.ready
 </script>
+
 </body>
 </html>
